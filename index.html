@@ -188,3 +188,47 @@
 
 </body>
 </html>
+<script>
+const apiKey = "YOUR_API_KEY_HERE"; // 🔑 PUT YOUR KEY HERE
+
+async function loadNews() {
+  const url = https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=${apiKey};
+  
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const articles = data.articles;
+
+  // Featured article
+  const featured = articles[0];
+  document.getElementById("featured-img").src = featured.urlToImage || "";
+  document.getElementById("featured-title").innerText = featured.title;
+  document.getElementById("featured-desc").innerText = featured.description || "";
+  document.getElementById("featured-btn").onclick = () => {
+    window.open(featured.url);
+  };
+
+  // Other news
+  const container = document.getElementById("news-container");
+  container.innerHTML = "";
+
+  articles.slice(1).forEach(article => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    card.innerHTML = `
+      <img src="${article.urlToImage || 'https://via.placeholder.com/300'}">
+      <h3>${article.title}</h3>
+      <p>${article.description || "No description available."}</p>
+      <button onclick="window.open('${article.url}')">Read More</button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+loadNews();
+</script>
+
+</body>
+</html>
