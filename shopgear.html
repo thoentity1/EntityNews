@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entity Fight Gear</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f172a;
+  color: #fff;
+}
+
+header {
+  background: #111827;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+header h1 { color: #ef4444; }
+
+nav a {
+  color: #fff;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+/* GRID */
+.container { padding: 20px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: #1f2937;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.price {
+  color: #22c55e;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+button {
+  background: #ef4444;
+  border: none;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+footer {
+  background: #111827;
+  text-align: center;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Entity Fight Gear</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="sport.html">Sports</a>
+    <a href="fighters.html">Fighters</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>🥊 Shop Fight Gear</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <img src="https://source.unsplash.com/400x300/?boxing-gloves">
+      <h3>Boxing Gloves</h3>
+      <p class="price">R799</p>
+      <button onclick="buy('Boxing Gloves')">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <img src="https://source.unsplash.com/400x300/?handwraps">
+      <h3>Hand Wraps</h3>
+      <p class="price">R199</p>
+      <button onclick="buy('Hand Wraps')">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <img src="https://source.unsplash.com/400x300/?muaythai">
+      <h3>Kickboxing Shorts</h3>
+      <p class="price">R499</p>
+      <button onclick="buy('Kickboxing Shorts')">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <img src="https://source.unsplash.com/400x300/?mouthguard">
+      <h3>Mouth Guard</h3>
+      <p class="price">R149</p>
+      <button onclick="buy('Mouth Guard')">Buy Now</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+© 2026 Entity Fight Gear
+</footer>
+
+<script>
+function buy(product) {
+  const message = `Hi, I'm interested in buying: ${product}`;
+  window.open(`https://wa.me/27719909430?text=${encodeURIComponent(message)}`);
+}
+</script>
+
+</body>
+</html>
