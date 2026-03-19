@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entity News</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0f172a;
+      color: #fff;
+    }
+
+    header {
+      background: #111827;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: #ef4444;
+      margin: 0;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ef4444;
+    }
+
+    .breaking {
+      background: #ef4444;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .featured {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .featured img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+
+    .featured-content {
+      max-width: 600px;
+    }
+
+    .featured-content h2 {
+      color: #facc15;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #1f2937;
+      padding: 15px;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+      color: #38bdf8;
+    }
+
+    footer {
+      background: #111827;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    button {
+      background: #ef4444;
+      border: none;
+      padding: 10px 15px;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background: #dc2626;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Entity News</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">World</a>
+      <a href="#">Business</a>
+      <a href="#">Sports</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="breaking">
+    🔴 Breaking News: Stay updated with the latest headlines worldwide!
+  </div>
+
+  <div class="container">
+
+    <!-- Featured News -->
+    <div class="featured">
+      <img src="https://source.unsplash.com/600x400/?news" alt="Featured News">
+      <div class="featured-content">
+        <h2>Top Story: Global Markets Shift</h2>
+        <p>
+          Markets are experiencing major changes as global economic trends evolve.
+          Stay tuned for expert analysis and insights.
+        </p>
+        <button>Read More</button>
+      </div>
+    </div>
+
+    <!-- Latest News -->
+    <h2>Latest News</h2>
+
+    <div class="news-grid">
+
+      <div class="card">
+        <img src="https://source.unsplash.com/400x300/?economy" alt="">
+        <h3>Economy Update</h3>
+        <p>Latest developments in the global economy and financial markets.</p>
+      </div>
+
+      <div class="card">
+        <img src="https://source.unsplash.com/400x300/?technology" alt="">
+        <h3>Tech News</h3>
+        <p>New innovations shaping the future of technology.</p>
+      </div>
+
+      <div class="card">
+        <img src="https://source.unsplash.com/400x300/?sports" alt="">
+        <h3>Sports Highlights</h3>
+        <p>Catch up on the latest sports action and results.</p>
+      </div>
+
+      <div class="card">
+        <img src="https://source.unsplash.com/400x300/?politics" alt="">
+        <h3>Politics</h3>
+        <p>Key political updates from around the world.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 Entity News | All Rights Reserved
+  </footer>
+
+</body>
+</html>
