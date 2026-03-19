@@ -187,48 +187,55 @@
   </footer>
 
 </body>
-</html>
-<script>
-const apiKey = aa733999b63a4c8f9dd7c10d4d8a98a9; // 🔑 PUT YOUR KEY HERE
+  <script>
+const apiKey = "YOUR_API_KEY_HERE"; // 🔑 Put your real key in quotes
 
 async function loadNews() {
-  const url = https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=${apiKey};
-  
-  const res = await fetch(url);
-  const data = await res.json();
+  const url = `https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=${apiKey}`;
 
-  const articles = data.articles;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
 
-  // Featured article
-  const featured = articles[0];
-  document.getElementById("featured-img").src = featured.urlToImage || "";
-  document.getElementById("featured-title").innerText = featured.title;
-  document.getElementById("featured-desc").innerText = featured.description || "";
-  document.getElementById("featured-btn").onclick = () => {
-    window.open(featured.url);
-  };
+    const articles = data.articles;
 
-  // Other news
-  const container = document.getElementById("news-container");
-  container.innerHTML = "";
+    if (!articles || articles.length === 0) {
+      alert("No news found");
+      return;
+    }
 
-  articles.slice(1).forEach(article => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+    // Featured article
+    const featured = articles[0];
+    document.getElementById("featured-img").src = featured.urlToImage || "";
+    document.getElementById("featured-title").innerText = featured.title;
+    document.getElementById("featured-desc").innerText = featured.description || "No description available.";
+    document.getElementById("featured-btn").onclick = () => {
+      window.open(featured.url);
+    };
 
-    card.innerHTML = `
-      <img src="${article.urlToImage || 'https://via.placeholder.com/300'}">
-      <h3>${article.title}</h3>
-      <p>${article.description || "No description available."}</p>
-      <button onclick="window.open('${article.url}')">Read More</button>
-    `;
+    // Other news
+    const container = document.getElementById("news-container");
+    container.innerHTML = "";
 
-    container.appendChild(card);
-  });
+    articles.slice(1).forEach(article => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+
+      card.innerHTML = `
+        <img src="${article.urlToImage || 'https://via.placeholder.com/300'}">
+        <h3>${article.title}</h3>
+        <p>${article.description || "No description available."}</p>
+        <button onclick="window.open('${article.url}')">Read More</button>
+      `;
+
+      container.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error("Error loading news:", error);
+  }
 }
 
 loadNews();
 </script>
-
-</body>
 </html>
