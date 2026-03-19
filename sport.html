@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entity Sports - Kickboxing News</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f172a;
+  color: #fff;
+}
+
+/* HEADER */
+header {
+  background: #111827;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+header h1 { color: #ef4444; }
+
+/* NAV */
+nav a {
+  color: #fff;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* TITLE */
+.title {
+  text-align: center;
+  padding: 20px;
+  background: #ef4444;
+}
+
+/* NEWS GRID */
+.container { padding: 20px; }
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #1f2937;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.card img { width: 100%; border-radius: 10px; }
+
+.card h3 { color: #38bdf8; }
+
+/* BUTTON */
+button {
+  background: #ef4444;
+  border: none;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* CTA */
+.cta {
+  background: #7f1d1d;
+  padding: 20px;
+  text-align: center;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+footer {
+  background: #111827;
+  text-align: center;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Entity Sports</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#">Kickboxing</a>
+    <a href="#">MMA</a>
+  </nav>
+</header>
+
+<div class="title">
+🥊 Kickboxing & Combat Sports News
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>Train Hard. Stay Sharp.</h2>
+  <p>Get the latest updates in kickboxing, MMA, and fitness.</p>
+</div>
+
+<div class="container">
+  <div class="news-grid" id="news-container"></div>
+</div>
+
+<footer>
+© 2026 Entity Sports
+</footer>
+
+<script>
+const apiKey = "YOUR_GNEWS_API_KEY";
+
+/* LOAD KICKBOXING NEWS */
+async function loadKickboxingNews() {
+  const url = `https://gnews.io/api/v4/search?q=kickboxing OR MMA OR boxing&lang=en&max=10&apikey=${apiKey}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const container = document.getElementById("news-container");
+  container.innerHTML = "";
+
+  if (!data.articles) return;
+
+  data.articles.forEach(a => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${a.image || 'https://via.placeholder.com/300'}">
+      <h3>${a.title}</h3>
+      <p>${a.description || ""}</p>
+      <button onclick="window.open('${a.url}')">Read More</button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+loadKickboxingNews();
+</script>
+
+</body>
+</html>
