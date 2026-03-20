@@ -27,6 +27,7 @@ nav a {
   color: #fff;
   margin-left: 15px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 /* TICKER */
@@ -48,55 +49,6 @@ nav a {
   to { transform: translateX(-100%); }
 }
 
-/* LAYOUT */
-.main {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 20px;
-  padding: 20px;
-}
-
-/* NEWS GRID */
-.news-grid {
-  display: grid;
-  gap: 20px;
-}
-
-.card {
-  background: #1f2937;
-  padding: 15px;
-  border-radius: 10px;
-}
-
-.card img { width: 100%; }
-
-.card h3 { color: #38bdf8; cursor: pointer; }
-
-/* SIDEBAR */
-.sidebar {
-  background: #111827;
-  padding: 15px;
-  border-radius: 10px;
-}
-
-.sidebar h3 {
-  color: #ef4444;
-}
-
-.sidebar p {
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
-/* ADS */
-.ad {
-  background: #ef4444;
-  padding: 20px;
-  margin-top: 20px;
-  text-align: center;
-  border-radius: 10px;
-}
-
 /* SEARCH */
 .search-bar {
   text-align: center;
@@ -113,6 +65,60 @@ button {
   background: #ef4444;
   color: white;
   border: none;
+  cursor: pointer;
+}
+
+/* LAYOUT */
+.main {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* NEWS */
+.news-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.card {
+  background: #1f2937;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.card h3 {
+  color: #38bdf8;
+  cursor: pointer;
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: #111827;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.sidebar h3 { color: #ef4444; }
+
+.sidebar p {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* ADS */
+.ad {
+  background: #ef4444;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 footer {
@@ -128,36 +134,37 @@ footer {
 <header>
   <h1>Entity News</h1>
   <nav>
-    <a href="index.html" onclick="loadNews()">Home</a>
-    <a href="business.html" onclick="loadCategory('business')">Business</a>
+    <a onclick="loadNews()">Home</a>
+    <a onclick="loadCategory('business')">Business</a>
     <a href="sport.html">Sports</a>
     <a href="tech.html">Tech</a>
   </nav>
 </header>
 
+<!-- TICKER -->
 <div class="ticker">
-  <div id="ticker-text">Loading...</div>
+  <div id="ticker-text">Loading breaking news...</div>
 </div>
 
+<!-- SEARCH -->
 <div class="search-bar">
-  <input type="text" id="searchInput">
+  <input type="text" id="searchInput" placeholder="Search news...">
   <button onclick="searchNews()">Search</button>
 </div>
 
 <div class="main">
 
-<!-- LEFT: NEWS -->
+<!-- NEWS -->
 <div>
   <h2>🔥 Trending Now</h2>
-  <div class="news-grid" id="news-container"></div>
+  <div id="news-container" class="news-grid"></div>
 </div>
 
-<!-- RIGHT: SIDEBAR -->
+<!-- SIDEBAR -->
 <div class="sidebar">
   <h3>Trending Headlines</h3>
   <div id="sidebar"></div>
 
-  <!-- AD SPACE -->
   <div class="ad">
     💰 Your Ad Here  
     <br><br>
@@ -172,22 +179,18 @@ footer {
 </footer>
 
 <script>
-const apiKey = "c69fbafac48a745e46fc4314c7f69d49";
+const apiKey = "YOUR_GNEWS_API_KEY";
 
-/* FETCH */
+/* FETCH NEWS */
 async function fetchNews(url) {
   try {
     const res = await fetch(url);
     const data = await res.json();
 
-    console.log(data); // 👈 ADD THIS
-
     if (!data.articles) {
-      alert("API error - check key or limit");
+      alert("API error - check your key");
       return;
     }
-
-    const articles = data.articles;
 
     const container = document.getElementById("news-container");
     const sidebar = document.getElementById("sidebar");
@@ -195,18 +198,21 @@ async function fetchNews(url) {
     container.innerHTML = "";
     sidebar.innerHTML = "";
 
-    articles.forEach((a, i) => {
+    data.articles.forEach((a, i) => {
+
+      // MAIN NEWS
       const card = document.createElement("div");
       card.className = "card";
 
       card.innerHTML = `
-        <img src="${a.image || ''}">
+        <img src="${a.image || 'https://via.placeholder.com/300'}">
         <h3 onclick="window.open('${a.url}')">${a.title}</h3>
         <p>${a.description || ""}</p>
       `;
 
       container.appendChild(card);
 
+      // SIDEBAR
       if (i < 5) {
         const item = document.createElement("p");
         item.innerText = "👉 " + a.title;
@@ -215,43 +221,23 @@ async function fetchNews(url) {
       }
     });
 
-  } catch (e) {
+  } catch (err) {
+    console.log(err);
     alert("Error loading news");
-    console.log(e);
   }
 }
 
-    // MAIN
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <img src="${a.image}">
-      <h3 onclick="window.open('${a.url}')">${a.title}</h3>
-      <p>${a.description || ""}</p>
-    `;
-
-    container.appendChild(card);
-
-    // SIDEBAR (TOP 5)
-    if (i < 5) {
-      const item = document.createElement("p");
-      item.innerText = "👉 " + a.title;
-      item.onclick = () => window.open(a.url);
-      sidebar.appendChild(item);
-    }
-  });
-}
-
-/* LOAD */
+/* LOAD NEWS */
 function loadNews() {
   fetchNews(`https://gnews.io/api/v4/top-headlines?country=za&max=10&apikey=${apiKey}`);
 }
 
+/* CATEGORY */
 function loadCategory(cat) {
   fetchNews(`https://gnews.io/api/v4/top-headlines?topic=${cat}&apikey=${apiKey}`);
 }
 
+/* SEARCH */
 function searchNews() {
   const q = document.getElementById("searchInput").value;
   fetchNews(`https://gnews.io/api/v4/search?q=${q}&apikey=${apiKey}`);
@@ -259,16 +245,24 @@ function searchNews() {
 
 /* TICKER */
 async function loadTicker() {
-  const res = await fetch(`https://gnews.io/api/v4/top-headlines?country=za&max=5&apikey=${apiKey}`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`https://gnews.io/api/v4/top-headlines?country=za&max=5&apikey=${apiKey}`);
+    const data = await res.json();
 
-  document.getElementById("ticker-text").innerText =
-    data.articles.map(a => a.title).join(" 🔴 ");
+    if (!data.articles) return;
+
+    document.getElementById("ticker-text").innerText =
+      data.articles.map(a => a.title).join(" 🔴 ");
+
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 /* AUTO REFRESH */
 setInterval(loadNews, 60000);
 
+/* INIT */
 loadNews();
 loadTicker();
 </script>
