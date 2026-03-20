@@ -176,18 +176,50 @@ const apiKey = "c69fbafac48a745e46fc4314c7f69d49";
 
 /* FETCH */
 async function fetchNews(url) {
-  const res = await fetch(url);
-  const data = await res.json();
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
 
-  const articles = data.articles;
+    console.log(data); // 👈 ADD THIS
 
-  const container = document.getElementById("news-container");
-  const sidebar = document.getElementById("sidebar");
+    if (!data.articles) {
+      alert("API error - check key or limit");
+      return;
+    }
 
-  container.innerHTML = "";
-  sidebar.innerHTML = "";
+    const articles = data.articles;
 
-  articles.forEach((a, i) => {
+    const container = document.getElementById("news-container");
+    const sidebar = document.getElementById("sidebar");
+
+    container.innerHTML = "";
+    sidebar.innerHTML = "";
+
+    articles.forEach((a, i) => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${a.image || ''}">
+        <h3 onclick="window.open('${a.url}')">${a.title}</h3>
+        <p>${a.description || ""}</p>
+      `;
+
+      container.appendChild(card);
+
+      if (i < 5) {
+        const item = document.createElement("p");
+        item.innerText = "👉 " + a.title;
+        item.onclick = () => window.open(a.url);
+        sidebar.appendChild(item);
+      }
+    });
+
+  } catch (e) {
+    alert("Error loading news");
+    console.log(e);
+  }
+}
 
     // MAIN
     const card = document.createElement("div");
